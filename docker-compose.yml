@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: docker
       POSTGRES_PASSWORD: docker
-      POSTGRES_DB: petshop
+      POSTGRES_DB: petshop_db
     volumes:
       - ./pgdata:/var/lib/postgresql/data
 
