@@ -2,11 +2,11 @@ pre-commit:
   commands:
     check:
       run: npm run format {staged_files}
-      glob: '*.{js,jsx,ts,tsx,css,json,md}'
+      glob: '*.{js,jsx,ts,tsx,css,json,md}, !pgdata, !node_modules'
       stage_fixed: true
 
 pre-push:
   commands:
     validate:
-      glob: '*.{ts,tsx}'
+      glob: '*.{ts,tsx}, !pgdata, !node_modules'
       run: npm run validate:typecheck

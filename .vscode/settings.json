@@ -1,7 +1,15 @@
 {
+  // ESLINT
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
+  },
+  // Make sure editor validates against project's TS Version
+  "typescript.tsdk": "node_modules/typescript/lib",
+  // Prisma
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma",
+    "editor.formatOnSave": true
   }
 }
