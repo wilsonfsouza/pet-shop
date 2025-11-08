@@ -8,6 +8,12 @@ const inter = Inter({
   weight: ['400', '500', '700'],
 });
 
+const interTight = Inter({
+  variable: '--font-inter-tight',
+  subsets: ['latin'],
+  weight: ['700'],
+});
+
 export const metadata: Metadata = {
   title: 'Pet World',
   description: 'Use this app to see clients and services scheduled for today.',
