@@ -20,6 +20,8 @@ model Appointment {
   petName     String
   phone       String
   description String
-  sheduledAt  DateTime
+  scheduledAt DateTime
   createdAt   DateTime
+
+  @@map("appointments")
 }
