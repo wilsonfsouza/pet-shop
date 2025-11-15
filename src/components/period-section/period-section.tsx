@@ -41,7 +41,9 @@ export const PeriodSection = ({ period }: PeriodSectionProps) => {
           </div>
         </div>
       ) : (
-        <p>No appointments for this period.</p>
+        <p className="text-paragraph-small-size text-content-secondary py-3 px-5">
+          No appointments for this period.
+        </p>
       )}
     </section>
   );
