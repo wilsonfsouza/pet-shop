@@ -1,10 +1,12 @@
 import { AppointmentsForm } from '@/components/appointments-form';
 import { PeriodSection } from '@/components/period-section';
-import { APPOINTMENTS_DATA } from '@/mock-data/appointments';
+import { Button } from '@/components/ui/button';
+import { prisma } from '@/lib/prisma';
 import { groupAppoitmentsByPeriod } from '@/utils/groupAppoitmentsByPeriod';
 
 export default async function Home() {
-  const appointmentsPerPeriod = groupAppoitmentsByPeriod(APPOINTMENTS_DATA);
+  const appointments = await prisma.appointment.findMany();
+  const appointmentsPerPeriod = groupAppoitmentsByPeriod(appointments);
   return (
     <main className="bg-background-primary p-6">
       <section>
@@ -26,7 +28,9 @@ export default async function Home() {
         </div>
       </section>
       <div className="fixed bottom-0 left-0 right-0 flex justify-center bg-background-tertiary py-4.5 px-6 md:bottom-8 md:right-7.5 md:left-auto md:top-auto md:w-auto md:bg-transparent md:p-0">
-        <AppointmentsForm />
+        <AppointmentsForm>
+          <Button variant="brand">New Schedule</Button>
+        </AppointmentsForm>
       </div>
     </main>
   );
