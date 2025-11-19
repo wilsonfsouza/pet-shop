@@ -28,8 +28,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${interTight.variable} antialiased`}>
-        {children}
-        <Toaster position="top-right" />
+        <div className="max-w-3xl mx-auto">
+          <main className="flex-1 flex flex-col mt-12">
+            {children}
+            <Toaster position="top-right" />
+          </main>
+        </div>
       </body>
     </html>
   );
