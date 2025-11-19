@@ -1,4 +1,5 @@
 import { AppointmentsForm } from '@/components/appointments-form';
+import { DatePicker } from '@/components/date-picker';
 import { PeriodSection } from '@/components/period-section';
 import { Button } from '@/components/ui/button';
 import { prisma } from '@/lib/prisma';
@@ -27,11 +28,11 @@ export default async function Home({ searchParams }: HomeProps) {
   });
   const appointmentsPerPeriod = groupAppoitmentsByPeriod(appointments);
   return (
-    <main className="bg-background-primary p-6">
+    <div className="bg-background-primary p-6">
       <section>
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-title-size text-content-primary mb-2">
+            <h1 className="text-title-size text-content-primary mb-2 md:mb-0">
               Your schedule
             </h1>
             <p className="text-paragraph-medium text-content-secondary">
@@ -39,7 +40,15 @@ export default async function Home({ searchParams }: HomeProps) {
               today.
             </p>
           </div>
+          <div className="hidden md:flex items-center gap-4">
+            <DatePicker />
+          </div>
         </div>
+
+        <div className="mt-3 mb-8 flex items-center gap-4 md:hidden">
+          <DatePicker />
+        </div>
+
         <div className="pb-24 md:pb-0 flex flex-col gap-3">
           {appointmentsPerPeriod.map((period) => (
             <PeriodSection key={period.type} period={period} />
@@ -51,6 +60,6 @@ export default async function Home({ searchParams }: HomeProps) {
           <Button variant="brand">New Schedule</Button>
         </AppointmentsForm>
       </div>
-    </main>
+    </div>
   );
 }
