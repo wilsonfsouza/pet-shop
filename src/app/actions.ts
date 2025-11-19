@@ -1,6 +1,7 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { calculatePeriodOfDay } from '@/utils/groupAppoitmentsByPeriod';
 import { revalidatePath } from 'next/cache';
 import z from 'zod';
 
@@ -21,9 +22,7 @@ export async function createAppointment(data: CreateAppointmentDTO) {
     const { scheduledAt } = parsedData;
     const hour = scheduledAt.getHours();
 
-    const isMorning = hour >= 9 && hour < 12;
-    const isAfternoon = hour >= 13 && hour < 18;
-    const isEvening = hour >= 19 && hour < 21;
+    const { isMorning, isAfternoon, isEvening } = calculatePeriodOfDay(hour);
 
     if (!isMorning && !isAfternoon && !isEvening) {
       return {
@@ -74,9 +73,7 @@ export async function updateAppointment(
     const { scheduledAt } = parsedData;
     const hour = scheduledAt.getHours();
 
-    const isMorning = hour >= 9 && hour < 12;
-    const isAfternoon = hour >= 13 && hour < 18;
-    const isEvening = hour >= 19 && hour < 21;
+    const { isMorning, isAfternoon, isEvening } = calculatePeriodOfDay(hour);
 
     if (!isMorning && !isAfternoon && !isEvening) {
       return {

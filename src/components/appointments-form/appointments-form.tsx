@@ -156,7 +156,6 @@ export const AppointmentsForm = ({
   };
 
   useEffect(() => {
-    console.log(appointment);
     if (appointment) form.reset(appointment);
   }, [appointment, form]);
 
