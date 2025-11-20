@@ -1,4 +1,4 @@
-import { Appointment as PrismaAppointment } from '@/generated/prisma/client';
+import { Appointment as PrismaAppointment } from '@/app/generated/prisma/client';
 
 export type AppointmentAPIResponse = PrismaAppointment;
 
