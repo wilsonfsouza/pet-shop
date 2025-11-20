@@ -21,7 +21,14 @@ export async function createAppointment(data: CreateAppointmentDTO) {
     const parsedData = appointmentSchema.parse(data);
 
     const { scheduledAt } = parsedData;
-    const hour = scheduledAt.getHours();
+    const hour = parseInt(
+      scheduledAt.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        timeZone: 'America/Los_Angeles',
+      })
+    );
 
     const { isMorning, isAfternoon, isEvening } = calculatePeriodOfDay(hour);
 
@@ -72,7 +79,14 @@ export async function updateAppointment(
     const parsedData = appointmentSchema.parse(data);
 
     const { scheduledAt } = parsedData;
-    const hour = scheduledAt.getHours();
+    const hour = parseInt(
+      scheduledAt.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        timeZone: 'America/Los_Angeles',
+      })
+    );
 
     const { isMorning, isAfternoon, isEvening } = calculatePeriodOfDay(hour);
 
