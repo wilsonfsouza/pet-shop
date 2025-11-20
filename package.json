@@ -9,6 +9,7 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "build": "prisma generate && prisma migrate deploy & next build",
+    "postbuild": "cp node_modules/.prisma/client/libquery_engine-rhel-openssl-3.0.x.so.node .next/server/app/",
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --check .",
