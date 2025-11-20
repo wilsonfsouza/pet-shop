@@ -2,6 +2,7 @@
 
 import { prisma } from '@/lib/prisma';
 import { calculatePeriodOfDay } from '@/utils/groupAppoitmentsByPeriod';
+import { endOfDay, startOfDay } from 'date-fns';
 import { revalidatePath } from 'next/cache';
 import z from 'zod';
 
@@ -142,6 +143,33 @@ export async function removeAppointment(id: string) {
 
     return {
       error: 'Error while removing appointment. Try again later.',
+    };
+  }
+}
+
+export async function getAppointmentsByDate(date: Date) {
+  try {
+    const appointments = await prisma.appointment.findMany({
+      where: {
+        scheduledAt: {
+          gte: startOfDay(date),
+          lte: endOfDay(date),
+        },
+      },
+      orderBy: {
+        scheduledAt: 'asc',
+      },
+    });
+
+    return {
+      appointments,
+    };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      appointments: [],
+      error: 'Error while retrieving appointments. Try again later.',
     };
   }
 }
