@@ -1,7 +1,10 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
-import { calculatePeriodOfDay } from '@/utils/groupAppoitmentsByPeriod';
+import {
+  calculatePeriodOfDay,
+  formatDateTime,
+} from '@/utils/groupAppoitmentsByPeriod';
 import { endOfDay, startOfDay } from 'date-fns';
 import { revalidatePath } from 'next/cache';
 import z from 'zod';
@@ -21,14 +24,7 @@ export async function createAppointment(data: CreateAppointmentDTO) {
     const parsedData = appointmentSchema.parse(data);
 
     const { scheduledAt } = parsedData;
-    const hour = parseInt(
-      scheduledAt.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-        timeZone: 'America/Los_Angeles',
-      })
-    );
+    const hour = parseInt(formatDateTime(scheduledAt));
 
     const { isMorning, isAfternoon, isEvening } = calculatePeriodOfDay(hour);
 
@@ -79,14 +75,7 @@ export async function updateAppointment(
     const parsedData = appointmentSchema.parse(data);
 
     const { scheduledAt } = parsedData;
-    const hour = parseInt(
-      scheduledAt.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-        timeZone: 'America/Los_Angeles',
-      })
-    );
+    const hour = parseInt(formatDateTime(scheduledAt));
 
     const { isMorning, isAfternoon, isEvening } = calculatePeriodOfDay(hour);
 
