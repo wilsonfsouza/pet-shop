@@ -47,5 +47,5 @@ notes.md
 pgdata
 
 # prisma generated files
-src/generated/
-/src/generated/prisma
+src/app/generated/
+/src/app/generated/prisma
