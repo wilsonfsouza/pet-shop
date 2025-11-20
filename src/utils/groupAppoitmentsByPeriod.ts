@@ -5,6 +5,15 @@ import {
   AppointmentPeriodDay,
 } from '@/types/appointment';
 
+export function formatDateTime(date: Date): string {
+  return date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'America/Los_Angeles',
+  });
+}
+
 export function calculatePeriodOfDay(hour: number) {
   const isMorning = hour >= 9 && hour < 12;
   const isAfternoon = hour >= 13 && hour < 18;
@@ -30,12 +39,9 @@ export function groupAppoitmentsByPeriod(
     (appointment) => {
       return {
         ...appointment,
-        time: appointment.scheduledAt.toLocaleTimeString('en-US', {
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
+        time: formatDateTime(appointment.scheduledAt),
         service: appointment.description,
-        period: getPeriod(appointment.scheduledAt.getHours()),
+        period: getPeriod(parseInt(formatDateTime(appointment.scheduledAt))),
       };
     }
   );
