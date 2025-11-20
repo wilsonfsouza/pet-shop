@@ -2,9 +2,9 @@ import { AppointmentsForm } from '@/components/appointments-form';
 import { DatePicker } from '@/components/date-picker';
 import { PeriodSection } from '@/components/period-section';
 import { Button } from '@/components/ui/button';
-import { prisma } from '@/lib/prisma';
 import { groupAppoitmentsByPeriod } from '@/utils/groupAppoitmentsByPeriod';
-import { endOfDay, parseISO, startOfDay } from 'date-fns';
+import { parseISO } from 'date-fns';
+import { getAppointmentsByDate } from './actions';
 
 type HomeProps = {
   searchParams: Promise<{ date: string }>;
@@ -15,18 +15,9 @@ export default async function Home({ searchParams }: HomeProps) {
   const TODAY = new Date();
   const selectedDate = date ? parseISO(date) : TODAY;
 
-  const appointments = await prisma.appointment.findMany({
-    where: {
-      scheduledAt: {
-        gte: startOfDay(selectedDate),
-        lte: endOfDay(selectedDate),
-      },
-    },
-    orderBy: {
-      scheduledAt: 'asc',
-    },
-  });
-  const appointmentsPerPeriod = groupAppoitmentsByPeriod(appointments);
+  const result = await getAppointmentsByDate(selectedDate);
+
+  const appointmentsPerPeriod = groupAppoitmentsByPeriod(result.appointments);
   return (
     <div className="bg-background-primary p-6">
       <section>
